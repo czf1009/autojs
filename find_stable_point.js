@@ -14,10 +14,14 @@
 // end_x = 1810
 // end_y = 985
 //end fight
-start_x = 680
-start_y = 240
-end_x = 700
-end_y = 260
+// start_x = 680
+// start_y = 240
+// end_x = 700
+// end_y = 260
+start_x = 444
+start_y = 950
+end_x = 454
+end_y = 960
 
 screen_width = 1920;
 screen_height = 1080;
@@ -70,13 +74,38 @@ function get_img(){
 	for (var x = start_x; x < end_x ; x++) {
 		for (var y = start_y; y < end_y; y++) {
 			if(img[x][y] != 0){
-				log(x)
-				log(y)
-				log(img[x][y])
+				log(x+', '+y+', '+img[x][y])
 			}
 		}
 	}	
 
+}
+
+function get_tupo_unbreak(){
+	capture = captureScreen()
+
+	start_x = 217
+	start_y = 159
+
+	x = start_x
+	var points = new Array();
+	var n = 0
+	for (var i = 3 - 1; i >= 0; i--) {
+		y = start_y
+		for (var j = 3 - 1; j >= 0; j--) {
+			points[n] = new Array()
+			points[n][0] = x
+			points[n][1] = y;
+			points[n][2] = images.pixel(capture, x, y)
+			y = y + 204
+			n++
+		};
+		x = x + 516
+	};
+
+	for (var i = 0; i < 9; i++) {
+		log(points[i][0]+', '+points[i][1]+', '+points[i][2])
+	}
 }
 
 get_img()

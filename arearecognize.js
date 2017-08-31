@@ -22,7 +22,14 @@ points_prepare = [
 		[1778.0, 979.0, -7113906.0]
 	]
 
-points_end_tupo = [
+points_break = [
+		[447.0, 957.0, -740769.0],
+		[451.0, 953.0, -740769.0],
+		[453.0, 956.0, -740769.0],
+		[453.0, 959.0, -609182.0]
+	]
+
+points_end_break = [
 		[698.0, 244.0, -8775664.0],
 		[694.0, 241.0, -9103601.0],
 		[688.0, 243.0, -4153718.0],
@@ -64,6 +71,10 @@ while(true){
 		log('prepare')
 	}else if (isIn(points_end)) {
 		log('end fight')
+	}else if (isIn(points_break)) {
+		log('break')
+	}else if (isIn(points_end_break)) {
+		log('end break')
 	}
 	sleep(700)
 }

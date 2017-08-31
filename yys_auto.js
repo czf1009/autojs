@@ -21,11 +21,15 @@ BOSSX = 926;
 BOSSY = 252;
 
 function checkAct(){
-	if(currentPackage() == "com.netease.onmyoji"){
+	pkgname = currentPackage()
+	if(pkgname != "com.netease.onmyoji"){
 		toastLog('不在游戏中');
-		log(currentPackage())
-		log(currentPackage() == "com.netease.onmyoji")
-		exit();
+		log(pkgname)
+		while(pkgname != "com.netease.onmyoji"){
+			sleep(1000)			
+			pkgname = currentPackage()
+		}
+		toastLog('回到游戏');
 	}
 }
 
@@ -64,33 +68,37 @@ points_end = [
 	]
 
 function isIn(points){
-	for (var i = 0; i < 4; i++) {
-		if (images.pixel(img, points[i][0], points[i][1]) != points[i][2]) {
-			// log('not in')
-			return false
+	try{
+		for (var i = 0; i < 4; i++) {
+			if (images.pixel(img, points[i][0], points[i][1]) != points[i][2]) {
+				// log('not in')
+				return false
+			};
 		};
-	};
+	}catch(err){
+		toastLog(err)
+	}
 	// log('in')
 	return true
 }
 
 
 while(true){
-	// checkAct()
+	checkAct()
 	img = captureScreen();
 	if (isIn(points_invite)) {
 		log('invite')
 		sleep(300+random(0,200))
-		click(AIX, AIY)
+		clic(AIX, AIY)
 	}else if (isIn(points_prepare)) {
 		log('prepare')
 		sleep(300+random(0,200))
-		click(PFX, PFY)
+		clic(PFX, PFY)
 	}else if (isIn(points_end)) {
 		log('end')
 		sleep(300+random(0,200))
 		while (!isIn(points_home)) {
-			click(500+random(100,400), 500+random(50,200))
+			clic(200+random(0,200), 500+random(50,200))
 			sleep(random(400,600))
 			img = captureScreen()
 		};
