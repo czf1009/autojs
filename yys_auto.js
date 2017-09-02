@@ -9,8 +9,6 @@ if(!requestScreenCapture(screen_width,screen_height)){
 }
 
 //accept invite
-// AIX = 220;
-// AIY = 419;
 AIX = 197;
 AIY = 368;
 //prepare fight
@@ -19,24 +17,6 @@ PFY = 833;
 //boss
 BOSSX = 926;
 BOSSY = 252;
-
-function checkAct(){
-	pkgname = currentPackage()
-	if(pkgname != "com.netease.onmyoji"){
-		toastLog('不在游戏中');
-		log(pkgname)
-		while(pkgname != "com.netease.onmyoji"){
-			sleep(1000)			
-			pkgname = currentPackage()
-		}
-		toastLog('回到游戏');
-	}
-}
-
-function clic(x, y){
-	checkAct();
-	click(x+random(-50,50), y+random(-50,50));
-}
 
 
 points_home = [
@@ -67,18 +47,40 @@ points_end = [
 		[681.0, 249.0, -4776430.0]
 	]
 
+
+// ====================================================
+// ====================================================
+// ====================================================
+
+function checkAct(){
+	pkgname = currentPackage()
+	if(pkgname != "com.netease.onmyoji"){
+		toastLog('不在游戏中');
+		log(pkgname)
+		while(pkgname != "com.netease.onmyoji"){
+			sleep(1000)			
+			pkgname = currentPackage()
+		}
+		toastLog('回到游戏');
+	}
+}
+
+
+function clic(x, y){
+	checkAct();
+	click(x+random(-20,20), y+random(-20,20));
+}
+
 function isIn(points){
 	try{
 		for (var i = 0; i < 4; i++) {
 			if (images.pixel(img, points[i][0], points[i][1]) != points[i][2]) {
-				// log('not in')
 				return false
 			};
 		};
 	}catch(err){
-		toastLog(err)
+		// toastLog(err)
 	}
-	// log('in')
 	return true
 }
 
@@ -88,17 +90,18 @@ while(true){
 	img = captureScreen();
 	if (isIn(points_invite)) {
 		log('invite')
-		sleep(300+random(0,200))
+		sleep(random(100,200))
 		clic(AIX, AIY)
+		sleep(1000)
 	}else if (isIn(points_prepare)) {
 		log('prepare')
-		sleep(300+random(0,200))
+		// sleep(random(100,200))
 		clic(PFX, PFY)
 	}else if (isIn(points_end)) {
 		log('end')
-		sleep(300+random(0,200))
+		// sleep(random(100,200))
 		while (!isIn(points_home)) {
-			clic(200+random(0,200), 500+random(50,200))
+			clic(random(200,400), random(550,700))
 			sleep(random(400,600))
 			img = captureScreen()
 		};

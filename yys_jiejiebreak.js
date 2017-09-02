@@ -52,6 +52,9 @@ points_end_break = [
 		[680.0, 256.0, -3754849.0]
 	]
 
+// ====================================================
+// ====================================================
+// ====================================================
 
 function checkAct(){
 	pkgname = currentPackage()
@@ -71,14 +74,15 @@ function clic(x, y){
 	click(x+random(-20,20), y+random(-20,20));
 }
 
-function start_fight(no){
-	img = captureScreen();
+function start_fight(img){
+	// img = captureScreen();
 	for (var j = 0; j < 9; j++) {
 		i = (no+j)%9
 		if (images.pixel(img, points_unbreak[i][0], points_unbreak[i][1]) == points_unbreak[i][2]) {
 			clic(points_unbreak[i][0], points_unbreak[i][1])
 			sleep(random(800,1200))
 			clic(points_unbreak[i][0] + 345, points_unbreak[i][1] + 234)
+			no = i
 			break
 		};
 	};
@@ -93,31 +97,33 @@ function isIn(points){
 			};
 		};
 	}catch(err){
-		toastLog(err)
+		// toastLog(err)
 	}
 	// log('in')
 	return true
 }
 
 
-no = 0
-faild_no = 0
+start_no = 4
+no = start_no
+faild_count = 0
+success_count = 0
 while(true){
 	checkAct()
 	img = captureScreen();
 	if (isIn(points_break)) {
-		sleep(random(800,1200))
-		start_fight(no)
-		no++
+		// sleep(random(800,1200))
+		// sleep(500)
+		start_fight(img)
 		sleep(3000)
 	}else if (isIn(points_prepare)) {
 		log('prepare')
-		sleep(300+random(0,200))
-		if (faild_no < 3) {
+		// sleep(300+random(0,200))
+		if (faild_count < 3) {
 			clic(EFX, EFY)
 			sleep(random(800,1200))
 			clic(EFCX, EFCY)
-			faild_no++
+			faild_count++
 			while (!isIn(points_break)) {
 				clic(200+random(0,200), 500+random(50,200))
 				sleep(random(400,600))
@@ -125,19 +131,21 @@ while(true){
 			};
 		}else{
 			clic(PFX, PFY)
+			success_count++
 		}
+		no = (no+1)%9
 	}else if (isIn(points_end_break)) {
 		log('end')
-		sleep(300+random(0,200))
+		// sleep(300+random(0,200))
 		while (!isIn(points_break)) {
 			clic(200+random(0,200), 500+random(50,200))
 			sleep(random(400,600))
 			img = captureScreen()
 		};
 	}
-	if (no == 9) {
-		no = 0
-		faild_no = 0
+	if (success_count == 8) {
+		faild_count = 0
+		success_count = 0
 	};
 	sleep(700)
 }
