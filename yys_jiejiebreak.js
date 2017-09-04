@@ -83,25 +83,53 @@ function start_fight(img){
 			sleep(random(800,1200))
 			clic(points_unbreak[i][0] + 345, points_unbreak[i][1] + 234)
 			no = i
+			success_count = success_count + j
 			break
 		};
 	};
+	sleep(3000)
 }
 
 function isIn(points){
 	try{
 		for (var i = 0; i < 4; i++) {
 			if (images.pixel(img, points[i][0], points[i][1]) != points[i][2]) {
-				// log('not in')
 				return false
 			};
 		};
 	}catch(err){
-		// toastLog(err)
 	}
-	// log('in')
 	return true
 }
+
+function prepare(img){
+	log('prepare')
+	if (faild_count < 3) {
+		clic(EFX, EFY)
+		sleep(random(800,1200))
+		clic(EFCX, EFCY)
+		faild_count++
+		while (!isIn(points_break)) {
+			clic(200+random(0,200), 500+random(50,200))
+			sleep(random(400,600))
+			img = captureScreen()
+		};
+	}else{
+		clic(PFX, PFY)
+		success_count++
+	}
+	no = (no+1)%9
+}
+
+function end(img){
+	log('end')
+	while (!isIn(points_break)) {
+		clic(200+random(0,200), 500+random(50,200))
+		sleep(random(400,600))
+		img = captureScreen()
+	};
+}
+
 
 
 start_no = 4
@@ -112,38 +140,13 @@ while(true){
 	checkAct()
 	img = captureScreen();
 	if (isIn(points_break)) {
-		// sleep(random(800,1200))
-		// sleep(500)
 		start_fight(img)
-		sleep(3000)
 	}else if (isIn(points_prepare)) {
-		log('prepare')
-		// sleep(300+random(0,200))
-		if (faild_count < 3) {
-			clic(EFX, EFY)
-			sleep(random(800,1200))
-			clic(EFCX, EFCY)
-			faild_count++
-			while (!isIn(points_break)) {
-				clic(200+random(0,200), 500+random(50,200))
-				sleep(random(400,600))
-				img = captureScreen()
-			};
-		}else{
-			clic(PFX, PFY)
-			success_count++
-		}
-		no = (no+1)%9
+		prepare(img)
 	}else if (isIn(points_end_break)) {
-		log('end')
-		// sleep(300+random(0,200))
-		while (!isIn(points_break)) {
-			clic(200+random(0,200), 500+random(50,200))
-			sleep(random(400,600))
-			img = captureScreen()
-		};
+		end(img)
 	}
-	if (success_count == 8) {
+	if (success_count > 8) {
 		faild_count = 0
 		success_count = 0
 	};
