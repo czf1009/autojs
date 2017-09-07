@@ -20,10 +20,10 @@ BOSSY = 252;
 
 
 points_home = [
-		[1903.0, 1045.0, -9556948.0],
-		[1903.0, 1031.0, -6131360.0],
-		[1901.0, 1074.0, -11981531.0],
-		[1892.0, 1031.0, -9221327.0]
+		[1860, 1075, -13428723],
+		[1857, 1077, -11917032],
+		[1851, 1073, -12903919],
+		[1842, 1042, -9232343]
 	]
 
 points_invite = [
@@ -90,7 +90,7 @@ while(true){
 	img = captureScreen();
 	if (isIn(points_invite)) {
 		log('invite')
-		sleep(random(100,200))
+		// sleep(random(100,200))
 		clic(AIX, AIY)
 		sleep(1000)
 	}else if (isIn(points_prepare)) {

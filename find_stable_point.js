@@ -1,8 +1,8 @@
 //home
-// start_x = 1830
-// start_y = 1030
-// end_x = 1920
-// end_y = 1080
+start_x = 1830
+start_y = 1030
+end_x = 1850
+end_y = 1050
 //invite
 // start_x = 165
 // start_y = 345
@@ -18,10 +18,11 @@
 // start_y = 240
 // end_x = 700
 // end_y = 260
-start_x = 444
-start_y = 950
-end_x = 454
-end_y = 960
+//end break
+// start_x = 900
+// start_y = 800
+// end_x = 910
+// end_y = 810
 
 screen_width = 1920;
 screen_height = 1080;
@@ -74,7 +75,7 @@ function get_img(){
 	for (var x = start_x; x < end_x ; x++) {
 		for (var y = start_y; y < end_y; y++) {
 			if(img[x][y] != 0){
-				log(x+', '+y+', '+img[x][y])
+				log('['+x+', '+y+', '+img[x][y]+'],')
 			}
 		}
 	}	

@@ -52,6 +52,13 @@ points_end_break = [
 		[680.0, 256.0, -3754849.0]
 	]
 
+points_get_prize = [
+		[900, 805, -13887468],
+		[907, 806, -12379627],
+		[908, 808, -5234921],
+		[909, 809, -4317927]
+	]
+
 // ====================================================
 // ====================================================
 // ====================================================
@@ -74,8 +81,7 @@ function clic(x, y){
 	click(x+random(-20,20), y+random(-20,20));
 }
 
-function start_fight(img){
-	// img = captureScreen();
+function start_fight(){
 	for (var j = 0; j < 9; j++) {
 		i = (no+j)%9
 		if (images.pixel(img, points_unbreak[i][0], points_unbreak[i][1]) == points_unbreak[i][2]) {
@@ -83,7 +89,6 @@ function start_fight(img){
 			sleep(random(800,1200))
 			clic(points_unbreak[i][0] + 345, points_unbreak[i][1] + 234)
 			no = i
-			success_count = success_count + j
 			break
 		};
 	};
@@ -102,7 +107,7 @@ function isIn(points){
 	return true
 }
 
-function prepare(img){
+function prepare(){
 	log('prepare')
 	if (faild_count < 3) {
 		clic(EFX, EFY)
@@ -116,13 +121,13 @@ function prepare(img){
 		};
 	}else{
 		clic(PFX, PFY)
-		success_count++
 	}
 	no = (no+1)%9
 }
 
-function end(img){
+function end(){
 	log('end')
+	success_count++
 	while (!isIn(points_break)) {
 		clic(200+random(0,200), 500+random(50,200))
 		sleep(random(400,600))
@@ -130,21 +135,39 @@ function end(img){
 	};
 }
 
+function init_success_count(){
+	img = captureScreen();
+	for (var i = 0; i < 9; i++) {
+		if (images.pixel(img, points_unbreak[i][0], points_unbreak[i][1]) != points_unbreak[i][2]) {
+			success_count++
+		};
+	};
+}
 
 
-start_no = 4
+start_no = 0
 no = start_no
 faild_count = 0
 success_count = 0
+	checkAct()
+if (isIn(points_break)) {
+	init_success_count()
+};
 while(true){
 	checkAct()
 	img = captureScreen();
 	if (isIn(points_break)) {
-		start_fight(img)
+		start_fight()
 	}else if (isIn(points_prepare)) {
-		prepare(img)
+		prepare()
 	}else if (isIn(points_end_break)) {
-		end(img)
+		end()
+		log('success_count:'+success_count)
+		log('faild_count:'+faild_count)
+	}else if (isIn(points_get_prize)){
+		log('get_prize')
+		clic(500,500)
+		sleep(1000)
 	}
 	if (success_count > 8) {
 		faild_count = 0
