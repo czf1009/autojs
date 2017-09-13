@@ -152,6 +152,10 @@ success_count = 0
 	checkAct()
 if (isIn(points_break)) {
 	init_success_count()
+	if (success_count > 6) {
+		faild_count = 3
+	};
+	log('success_count:'+success_count)
 };
 while(true){
 	checkAct()
