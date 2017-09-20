@@ -100,7 +100,7 @@ while(true){
 	}else if (isIn(points_end)) {
 		log('end')
 		// sleep(random(100,200))
-		while (!isIn(points_home)) {
+		while (!isIn(points_home) && !isIn(points_prepare)) {
 			clic(random(200,400), random(550,700))
 			sleep(random(400,600))
 			img = captureScreen()
