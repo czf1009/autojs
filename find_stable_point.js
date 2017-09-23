@@ -1,8 +1,8 @@
 //home
-start_x = 1830
-start_y = 1030
-end_x = 1850
-end_y = 1050
+start_x = 1622
+start_y = 868
+end_x = 1722
+end_y = 968
 //invite
 // start_x = 165
 // start_y = 345

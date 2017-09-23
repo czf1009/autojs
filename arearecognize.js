@@ -43,6 +43,13 @@ points_end = [
 		[681.0, 249.0, -4776430.0]
 	]
 
+points_pk = [
+		[1721, 961, -1458315],
+		[1714, 928, -2968187],
+		[1701, 884, -1853056],
+		[1692, 893, -14212064]
+]
+
 if(!requestScreenCapture(screen_width,screen_height)){
 	toastLog("请求截图失败");
 	stop();
@@ -75,6 +82,8 @@ while(true){
 		log('break')
 	}else if (isIn(points_end_break)) {
 		log('end break')
+	}else if (isIn(points_pk)){
+		log('pk')
 	}
 	sleep(700)
 }

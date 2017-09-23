@@ -96,15 +96,18 @@ function start_fight(){
 }
 
 function isIn(points){
-	try{
-		for (var i = 0; i < 4; i++) {
-			if (images.pixel(img, points[i][0], points[i][1]) != points[i][2]) {
-				return false
+	while(true){
+		try{
+			for (var i = 0; i < 4; i++) {
+				if (images.pixel(img, points[i][0], points[i][1]) != points[i][2]) {
+					return false
+				};
 			};
-		};
-	}catch(err){
+		return true
+		}catch(err){
+			img = captureScreen()
+		}
 	}
-	return true
 }
 
 function prepare(){
@@ -114,6 +117,9 @@ function prepare(){
 		sleep(random(800,1200))
 		clic(EFCX, EFCY)
 		faild_count++
+		if (faild_count == 3){
+			no = start_no
+		} 
 		while (!isIn(points_break)) {
 			clic(200+random(0,200), 500+random(50,200))
 			sleep(random(400,600))
@@ -136,7 +142,6 @@ function end(){
 }
 
 function init_success_count(){
-	img = captureScreen();
 	for (var i = 0; i < 9; i++) {
 		if (images.pixel(img, points_unbreak[i][0], points_unbreak[i][1]) != points_unbreak[i][2]) {
 			success_count++
@@ -145,11 +150,11 @@ function init_success_count(){
 }
 
 
-start_no = 0
+start_no = 5
 no = start_no
 faild_count = 0
 success_count = 0
-	checkAct()
+checkAct()
 if (isIn(points_break)) {
 	init_success_count()
 	if (success_count > 6) {
