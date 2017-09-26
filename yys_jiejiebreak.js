@@ -118,7 +118,7 @@ function prepare(){
 		clic(EFCX, EFCY)
 		faild_count++
 		if (faild_count == 3){
-			no = start_no
+			no = (start_no-1)%9
 		} 
 		while (!isIn(points_break)) {
 			clic(200+random(0,200), 500+random(50,200))
@@ -135,7 +135,7 @@ function end(){
 	log('end')
 	success_count++
 	while (!isIn(points_break)) {
-		clic(200+random(0,200), 500+random(50,200))
+		clic(100, 500)
 		sleep(random(400,600))
 		img = captureScreen()
 	};
@@ -150,7 +150,7 @@ function init_success_count(){
 }
 
 
-start_no = 5
+start_no = 0
 no = start_no
 faild_count = 0
 success_count = 0
