@@ -81,7 +81,7 @@ function checkActivity(){
 
     }
 }
-// sleep(3000);
+sleep(1000);
 setInterval(()=>{checkActivity()}, 200);
 
 var width = window.getWidth();
