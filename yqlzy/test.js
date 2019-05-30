@@ -1,73 +1,3 @@
-var window = floaty.window(
-    <vertical id="floaty" alpha="0.7" w="30" visibility="gone">
-        <button id='test' style="Widget.AppCompat.Button.Colored" padding="0" text="test" />
-    </vertical>
-);
-window.setPosition(150, 500);
-
-sleep(1000);
-window.floaty.attr("visibility", "visible");
-
-var ra = new RootAutomator();
-ra.setScreenMetrics(1080, 1920);
-events.on('exit', function(){
-    ra.exit();
-});
-
-setInterval(()=>{}, 1000);
-
-
-
-
-
-
-
-
-
-
-
-
-//记录按键被按下时的触摸坐标
-var x = 0, y = 0;
-//记录按键被按下时的悬浮窗位置
-var windowX, windowY;
-//记录按键被按下的时间以便判断长按等动作
-var downTime;
-
-window.test.setOnTouchListener(function(view, event){
-    switch(event.getAction()){
-        case event.ACTION_DOWN:
-            x = event.getRawX();
-            y = event.getRawY();
-            windowX = window.getX();
-            windowY = window.getY();
-            downTime = new Date().getTime();
-            return true;
-        case event.ACTION_MOVE:
-            //移动手指时调整悬浮窗位置
-            window.setPosition(windowX + (event.getRawX() - x),
-                windowY + (event.getRawY() - y));
-            //如果按下的时间超过1.5秒判断为长按，退出脚本
-            if(new Date().getTime() - downTime > 1500){
-                exit();
-            }
-            return true
-        case event.ACTION_UP:
-            //手指弹起时如果偏移很小则判断为点击
-            if(Math.abs(event.getRawY() - y) < 5 && Math.abs(event.getRawX() - x) < 5){
-                threads.start(test.test_func(ra) );
-                // test.test_func(ra);
-            }
-            return true;
-    }
-    return true;
-})
-
-
-
-
-
-
 var test = {};
 test.test_func = function (ra){
     ra.sendEvent(3, 57, 50747);
@@ -473,4 +403,4 @@ ra.sendEvent(1, 325, 0);
 ra.sendSync();
 }
 
-// module.exports = test;
+module.exports = test;
