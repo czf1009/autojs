@@ -1,8 +1,8 @@
 "auto"
-if(!requestScreenCapture(1080,1920)){
-	toast("请求截图失败");
-	stop();
-}
+//if(!requestScreenCapture(1080,1920)){
+//	toast("请求截图失败");
+//	stop();
+//}
 // for(i=0;i<scriptFiles.length;i++){
 //     log(scriptFiles[i]);
 // }
@@ -41,6 +41,7 @@ function exec(action, args){
 
 var window = floaty.window(
     <vertical id="floaty" alpha="0.7" w="30" >
+        <button id="exit" style="Widget.AppCompat.Button.Colored" padding="0" text="X" />
         <button id="btn5" style="Widget.AppCompat.Button.Colored" padding="0" text="5雷" />
         <button id="btn4" style="Widget.AppCompat.Button.Colored" padding="0" text="4瓷" />
         <button id="btn3" style="Widget.AppCompat.Button.Colored" padding="0" text="3远" />
@@ -72,15 +73,15 @@ function checkActivity(){
                 window.setSize(width, height);
                 isShow = true;
             }
-            if(isOpenService()){
-                // toastLog("true")
-                press(357,1133, 10)
-            }
+            // if(isOpenService()){
+            //     // toastLog("true")
+            //     press(357,1133, 10)
+            // }
         }
 
     }
 }
-sleep(3000);
+sleep(1000);
 setInterval(()=>{checkActivity()}, 200);
 
 var width = window.getWidth();
@@ -95,6 +96,33 @@ var windowX, windowY;
 //记录按键被按下的时间以便判断长按等动作
 var downTime;
 
+window.exit.setOnTouchListener(function(view, event){
+    switch(event.getAction()){
+        case event.ACTION_DOWN:
+            x = event.getRawX();
+            y = event.getRawY();
+            windowX = window.getX();
+            windowY = window.getY();
+            downTime = new Date().getTime();
+            return true;
+        case event.ACTION_MOVE:
+            //移动手指时调整悬浮窗位置
+            window.setPosition(windowX + (event.getRawX() - x),
+                windowY + (event.getRawY() - y));
+            // //如果按下的时间超过1.5秒判断为长按，退出脚本
+            // if(new Date().getTime() - downTime > 1500){
+            //     exit();
+            // }
+            return true
+        case event.ACTION_UP:
+            //手指弹起时如果偏移很小则判断为点击
+            if(Math.abs(event.getRawY() - y) < 5 && Math.abs(event.getRawX() - x) < 5){
+                exit();
+            }
+            return true;
+    }
+    return true;
+})
 
 window.btn5.setOnTouchListener(function(view, event){
     switch(event.getAction()){
@@ -109,10 +137,10 @@ window.btn5.setOnTouchListener(function(view, event){
             //移动手指时调整悬浮窗位置
             window.setPosition(windowX + (event.getRawX() - x),
                 windowY + (event.getRawY() - y));
-            //如果按下的时间超过1.5秒判断为长按，退出脚本
-            if(new Date().getTime() - downTime > 1500){
-                exit();
-            }
+            // //如果按下的时间超过1.5秒判断为长按，退出脚本
+            // if(new Date().getTime() - downTime > 1500){
+            //     exit();
+            // }
             return true
         case event.ACTION_UP:
             //手指弹起时如果偏移很小则判断为点击
@@ -138,10 +166,6 @@ window.btn4.setOnTouchListener(function(view, event){
             //移动手指时调整悬浮窗位置
             window.setPosition(windowX + (event.getRawX() - x),
                 windowY + (event.getRawY() - y));
-            //如果按下的时间超过1.5秒判断为长按，退出脚本
-            if(new Date().getTime() - downTime > 1500){
-                exit();
-            }
             return true
         case event.ACTION_UP:
             //手指弹起时如果偏移很小则判断为点击
@@ -166,10 +190,6 @@ window.btn3.setOnTouchListener(function(view, event){
             //移动手指时调整悬浮窗位置
             window.setPosition(windowX + (event.getRawX() - x),
                 windowY + (event.getRawY() - y));
-            //如果按下的时间超过1.5秒判断为长按，退出脚本
-            if(new Date().getTime() - downTime > 1500){
-                exit();
-            }
             return true
         case event.ACTION_UP:
             //手指弹起时如果偏移很小则判断为点击
@@ -194,10 +214,6 @@ window.btn2.setOnTouchListener(function(view, event){
             //移动手指时调整悬浮窗位置
             window.setPosition(windowX + (event.getRawX() - x),
                 windowY + (event.getRawY() - y));
-            //如果按下的时间超过1.5秒判断为长按，退出脚本
-            if(new Date().getTime() - downTime > 1500){
-                exit();
-            }
             return true
         case event.ACTION_UP:
             //手指弹起时如果偏移很小则判断为点击
@@ -222,10 +238,6 @@ window.btn1.setOnTouchListener(function(view, event){
             //移动手指时调整悬浮窗位置
             window.setPosition(windowX + (event.getRawX() - x),
                 windowY + (event.getRawY() - y));
-            //如果按下的时间超过1.5秒判断为长按，退出脚本
-            if(new Date().getTime() - downTime > 1500){
-                exit();
-            }
             return true
         case event.ACTION_UP:
             //手指弹起时如果偏移很小则判断为点击
@@ -250,15 +262,11 @@ window.btn0.setOnTouchListener(function(view, event){
             //移动手指时调整悬浮窗位置
             window.setPosition(windowX + (event.getRawX() - x),
                 windowY + (event.getRawY() - y));
-            //如果按下的时间超过1.5秒判断为长按，退出脚本
-            if(new Date().getTime() - downTime > 1500){
-                exit();
-            }
             return true
         case event.ACTION_UP:
             //手指弹起时如果偏移很小则判断为点击
             if(Math.abs(event.getRawY() - y) < 5 && Math.abs(event.getRawX() - x) < 5){
-                run_script("0龟.js");
+                run_script("旋转0龟.js");
             }
             return true;
     }
